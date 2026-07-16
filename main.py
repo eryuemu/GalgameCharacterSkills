@@ -1243,8 +1243,10 @@ def _do_summarize(data):
                         else:
                             consecutive_connection_failures = 0
                 except Exception as e:
+                    import traceback
+                    tb_str = traceback.format_exc()
                     failed_indices.append(task[0])
-                    errors.append(f'切片 {task[0] + 1} 处理异常: {str(e)}')
+                    errors.append(f'切片 {task[0] + 1} 处理异常: {str(e)}\n[Traceback]\n{tb_str}')
                     if _is_connection_failure(str(e)):
                         consecutive_connection_failures += 1
                     else:
